@@ -2,10 +2,10 @@ import YearCardComponent from "../components/YearCardComponent";
 import MissionCardComponent from "../components/MissionCardComponent";
 import { Grid } from "@material-ui/core";
 import styles from "../components/style.module.css";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
-const Home = ({ data }) => {
-  const [productData, setProductData] = useState(data);
+const Home = () => {
+  const [productData, setProductData] = useState([]);
   const [selectedYear, setYear] = useState("");
   const [launchValue, setLaunchValue] = useState("");
   const [landingValue, setLandingValue] = useState("");
@@ -28,6 +28,14 @@ const Home = ({ data }) => {
     }
   };
   useEffect(() => {
+    fetch("https://api.spaceXdata.com/v3/launches?limit=100")
+      .then((response) => response.json())
+      .then((data) => setProductData(data))
+      .catch((err) => {
+        console.log("NETWORK ERROR", err);
+      });
+  }, []);
+  useCallback(() => {
     let filteredUrl = `https://api.spaceXdata.com/v3/launches?limit=100&launch_success=${launchValue}&land_success=${landingValue}&launch_year=${selectedYear}`;
     if (launchValue && selectedYear === "" && !landingValue) {
       filteredUrl =
@@ -72,17 +80,4 @@ const Home = ({ data }) => {
   );
 };
 
-export async function getServerSideProps() {
-  try {
-    const res = await fetch("https://api.spaceXdata.com/v3/launches?limit=100");
-    const data = await res.json();
-    return {
-      props: {
-        data,
-      },
-    };
-  } catch (err) {
-    console.log("SEVER ERROR");
-  }
-}
 export default Home;
