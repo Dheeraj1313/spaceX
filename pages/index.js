@@ -78,14 +78,16 @@ async function getProductData(url) {
 }
 export async function getServerSideProps() {
   let url = "https://api.spaceXdata.com/v3/launches?limit=100";
-
-  const res = await fetch(url);
-  const data = await res.json();
-  return {
-    props: {
-      data,
-    },
-  };
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    return {
+      props: {
+        data,
+      },
+    };
+  } catch (err) {
+    console.log("SEVER ERROR");
+  }
 }
-
 export default Home;
