@@ -3,14 +3,12 @@ import MissionCardComponent from "../components/MissionCardComponent";
 import { Grid } from "@material-ui/core";
 import styles from "../components/style.module.css";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 
 const Home = ({ data }) => {
   const [productData, setProductData] = useState(data);
   const [selectedYear, setYear] = useState("");
   const [launchValue, setLaunchValue] = useState("");
   const [landingValue, setLandingValue] = useState("");
-  const router = useRouter();
   const filterData = (value, filterType) => {
     switch (filterType) {
       case "year":
@@ -33,7 +31,6 @@ const Home = ({ data }) => {
     if (launchValue && selectedYear === "" && !landingValue) {
       filteredUrl =
         "https://api.spaceXdata.com/v3/launches?limit=100&launch_success=true";
-      router.push("/launch-success");
     } else if (launchValue && landingValue && selectedYear === "") {
       filteredUrl =
         "https://api.spaceXdata.com/v3/launches?limit=100&launch_success=true&land_success=true";
