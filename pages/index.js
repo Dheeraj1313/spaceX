@@ -9,6 +9,7 @@ const Home = ({ data }) => {
   const [selectedYear, setYear] = useState("");
   const [launchValue, setLaunchValue] = useState("");
   const [landingValue, setLandingValue] = useState("");
+
   const filterData = (value, filterType, evt) => {
     evt.preventDefault();
     switch (filterType) {
@@ -72,10 +73,9 @@ const Home = ({ data }) => {
   );
 };
 
-export async function getServerSideProps() {
-  let url = "https://api.spaceXdata.com/v3/launches?limit=100";
+export const getStaticProps = async function () {
   try {
-    const res = await fetch(url);
+    const res = await fetch(`https://api.spaceXdata.com/v3/launches?limit=100`);
     const data = await res.json();
     return {
       props: {
@@ -85,5 +85,5 @@ export async function getServerSideProps() {
   } catch (err) {
     console.log("SEVER ERROR");
   }
-}
+};
 export default Home;
