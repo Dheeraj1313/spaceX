@@ -45,8 +45,8 @@ const YearCardComponent = (props) => {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => {
-              filterData(year, "year");
+            onClick={(evt) => {
+              filterData(year, "year", evt);
             }}
           >
             {year}
@@ -64,8 +64,8 @@ const YearCardComponent = (props) => {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => {
-              filterData(true, "launchSucess");
+            onClick={(evt) => {
+              filterData(true, "launchSucess", evt);
             }}
           >
             true
@@ -75,8 +75,8 @@ const YearCardComponent = (props) => {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => {
-              filterData(false, "launchSucess");
+            onClick={(evt) => {
+              filterData(false, "launchSucess", evt);
             }}
           >
             false
@@ -93,8 +93,8 @@ const YearCardComponent = (props) => {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => {
-              filterData(true, "landSucess");
+            onClick={(evt) => {
+              filterData(true, "landSucess", evt);
             }}
           >
             true
@@ -104,8 +104,8 @@ const YearCardComponent = (props) => {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => {
-              filterData(false, "landSucess");
+            onClick={(evt) => {
+              filterData(false, "landSucess", evt);
             }}
           >
             false

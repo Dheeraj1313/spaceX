@@ -9,7 +9,8 @@ const Home = ({ data }) => {
   const [selectedYear, setYear] = useState("");
   const [launchValue, setLaunchValue] = useState("");
   const [landingValue, setLandingValue] = useState("");
-  const filterData = (value, filterType) => {
+  const filterData = (value, filterType, evt) => {
+    evt.preventDefault();
     switch (filterType) {
       case "year":
         setYear(value);
