@@ -6,10 +6,8 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start -H 0.0.0.0 -p $port",
-    "start:dev":"next start",
-    "start:prod":"next start -p 80",
-    "export": "npm build && next export"
+    "start": "next start -p $port",
+    "heroku-postbuild": "npm run build"
   },
   "keywords": [],
   "author": "",
