@@ -72,7 +72,7 @@ const Home = ({ data }) => {
   );
 };
 
-export async function getInitialProps() {
+export async function getServerSideProps() {
   try {
     const res = await fetch("https://api.spaceXdata.com/v3/launches?limit=100");
     const data = await res.json();
