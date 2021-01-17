@@ -39,10 +39,9 @@ const Home = ({ data }) => {
       filteredUrl = `https://api.spaceXdata.com/v3/launches?limit=100&launch_success=true&land_success=true&&launch_year=${selectedYear}`;
     }
 
-    getProductData(filteredUrl)
-      .then((res) => {
-        setProductData(res);
-      })
+    fetch(filteredUrl)
+      .then((response) => response.json())
+      .then((data) => setProductData(data))
       .catch((err) => {
         console.log("NETWORK ERROR", err);
       });
@@ -72,10 +71,7 @@ const Home = ({ data }) => {
     </Grid>
   );
 };
-async function getProductData(url) {
-  const res = await fetch(url);
-  return await res.json();
-}
+
 export async function getServerSideProps() {
   let url = "https://api.spaceXdata.com/v3/launches?limit=100";
   try {
