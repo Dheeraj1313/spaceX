@@ -34,7 +34,7 @@ const YearCardComponent = (props) => {
           <u>Launch year</u>
         </Typography>
       </Grid>
-      {yearArr.map((year) => (
+      {yearArr.map((year, i) => (
         <Grid
           item={true}
           key={year}
@@ -46,7 +46,8 @@ const YearCardComponent = (props) => {
             variant="contained"
             color="primary"
             onClick={(evt) => {
-              filterData(year, "year", evt);
+              evt.preventDefault();
+              filterData(year, "year");
             }}
           >
             {year}
@@ -65,7 +66,7 @@ const YearCardComponent = (props) => {
             variant="contained"
             color="primary"
             onClick={(evt) => {
-              filterData(true, "launchSucess", evt);
+              filterData(true, "launchSucess");
             }}
           >
             true
@@ -76,7 +77,7 @@ const YearCardComponent = (props) => {
             variant="contained"
             color="primary"
             onClick={(evt) => {
-              filterData(false, "launchSucess", evt);
+              filterData(false, "launchSucess");
             }}
           >
             false
@@ -94,7 +95,7 @@ const YearCardComponent = (props) => {
             variant="contained"
             color="primary"
             onClick={(evt) => {
-              filterData(true, "landSucess", evt);
+              filterData(true, "landSucess");
             }}
           >
             true
@@ -105,7 +106,7 @@ const YearCardComponent = (props) => {
             variant="contained"
             color="primary"
             onClick={(evt) => {
-              filterData(false, "landSucess", evt);
+              filterData(false, "landSucess");
             }}
           >
             false

@@ -1,6 +1,6 @@
 import YearCardComponent from "../components/YearCardComponent";
 import MissionCardComponent from "../components/MissionCardComponent";
-import { Grid } from "@material-ui/core";
+import { Grid, CircularProgress } from "@material-ui/core";
 import styles from "../components/style.module.css";
 import { useEffect, useState } from "react";
 
@@ -9,9 +9,9 @@ const Home = ({ data }) => {
   const [selectedYear, setYear] = useState("");
   const [launchValue, setLaunchValue] = useState("");
   const [landingValue, setLandingValue] = useState("");
+  const [isLoader, setIsLoader] = useState(false);
 
-  const filterData = (value, filterType, evt) => {
-    evt.preventDefault();
+  const filterData = (value, filterType) => {
     switch (filterType) {
       case "year":
         setYear(value);
@@ -30,19 +30,13 @@ const Home = ({ data }) => {
   };
   useEffect(() => {
     let filteredUrl = `https://api.spaceXdata.com/v3/launches?limit=100&launch_success=${launchValue}&land_success=${landingValue}&launch_year=${selectedYear}`;
-    if (launchValue && selectedYear === "" && !landingValue) {
-      filteredUrl =
-        "https://api.spaceXdata.com/v3/launches?limit=100&launch_success=true";
-    } else if (launchValue && landingValue && selectedYear === "") {
-      filteredUrl =
-        "https://api.spaceXdata.com/v3/launches?limit=100&launch_success=true&land_success=true";
-    } else if (launchValue && selectedYear !== "" && landingValue) {
-      filteredUrl = `https://api.spaceXdata.com/v3/launches?limit=100&launch_success=true&land_success=true&&launch_year=${selectedYear}`;
-    }
-
+    setIsLoader(true);
     fetch(filteredUrl)
       .then((response) => response.json())
-      .then((data) => setProductData(data))
+      .then((data) => {
+        setIsLoader(false);
+        setProductData(data);
+      })
       .catch((err) => {
         console.log("NETWORK ERROR", err);
       });
@@ -61,14 +55,19 @@ const Home = ({ data }) => {
         lg={10}
         className={styles.containerCard}
       >
-        {productData.map((val) => {
-          return (
-            <Grid item={true} key={val.flight_number} xs={12} sm={6} lg={3}>
-              <MissionCardComponent {...val} />
-            </Grid>
-          );
-        })}
+        {!isLoader ? (
+          productData.map((val) => {
+            return (
+              <Grid item={true} key={val.flight_number} xs={12} sm={6} lg={3}>
+                <MissionCardComponent {...val} />
+              </Grid>
+            );
+          })
+        ) : (
+          <CircularProgress />
+        )}
       </Grid>
+      <h1>Developed By: Dheeraj Joshi</h1>
     </Grid>
   );
 };

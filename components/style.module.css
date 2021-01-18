@@ -23,3 +23,11 @@
 .imageGrid{
      text-align: center;
 }
+.initialButton {
+background :lightgreen;
+opacity: 8;
+}
+.clickedButton {
+background :#0c830c;
+opacity: 10;
+}

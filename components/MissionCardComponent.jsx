@@ -27,28 +27,35 @@ const MissionCardComponent = (props) => {
         </Grid>
         <Grid item={true} xs={12} lg={12}>
           <Typography className={styles.filterText}>
-            {`Mission Ids : ${
+            <b>Mission Ids:</b>
+            {` ${
               mission_id > 0
                 ? mission_id.map((val) => {
                     return val;
                   })
-                : ""
+                : "Not Available"
             }`}
           </Typography>
         </Grid>
         <Grid item={true} xs={12} lg={12}>
           <Typography className={styles.filterText}>
-            {`Launch Year: ${launch_year}`}
+            <b>Launch Year:</b>
+            {` ${launch_year}`}
           </Typography>
         </Grid>
         <Grid item={true} xs={12} lg={12}>
           <Typography className={styles.filterText}>
-            {`Launch Success: ${launch_success}`}
+            <b>Successful Launch :</b> {` ${launch_success}`}
           </Typography>
         </Grid>
         <Grid item={true} xs={12} lg={12}>
           <Typography className={styles.filterText}>
-            {`Land Success: ${rocket.first_stage.cores[0].land_success}`}
+            <b>Successful Landing:</b>{" "}
+            {`${
+              rocket.first_stage.cores[0].land_success === null
+                ? "Not Avaliable"
+                : rocket.first_stage.cores[0].land_success
+            }`}
           </Typography>
         </Grid>
       </Grid>
