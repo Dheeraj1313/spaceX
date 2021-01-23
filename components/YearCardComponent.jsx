@@ -1,6 +1,6 @@
-import React from "react";
-import { Grid, Button, Typography } from "@material-ui/core";
+import React, { useCallback, memo, useState } from "react";
 import styles from "./style.module.css";
+import { ButtonGroup, Card, ToggleButton } from "react-bootstrap";
 
 const yearArr = [
   2006,
@@ -19,101 +19,138 @@ const yearArr = [
   2019,
   2020,
 ];
+
 const YearCardComponent = (props) => {
-  const { filterData } = props;
+  const { setYear, setLaunchValue, setLandingValue, setDblClick } = props;
+  const [radioValue, setRadioValue] = useState("");
+  const [landRadioValue, setlandRadioValue] = useState("");
+  const [launchRadioValue, setlaunchRadioValue] = useState("");
+
+  const setData = (value, filterType) => {
+    switch (filterType) {
+      case "year":
+        setRadioValue(value);
+        setYear(value);
+        break;
+      case "launchSucess":
+        setlaunchRadioValue(value);
+        setLaunchValue(value);
+        break;
+      case "landSucess":
+        setlandRadioValue(value);
+        setLandingValue(value);
+        break;
+      default:
+        setYear("");
+        setLaunchValue("");
+        setLandingValue("");
+    }
+  };
+  let clickTimeout = null;
+  const clickHandler = useCallback((val, filterType) => {
+    if (clickTimeout !== null) {
+      setData("", filterType);
+      setDblClick(true);
+      clearTimeout(clickTimeout);
+      clickTimeout = null;
+    } else {
+      clickTimeout = setTimeout(() => {
+        clearTimeout(clickTimeout);
+        clickTimeout = null;
+        setDblClick(false);
+        setData(val, filterType);
+      }, 300);
+    }
+  });
   return (
-    <Grid container item className={styles.innerCardGrid}>
-      <Grid item={true} xs={12} lg={12}>
-        <Typography variant="h4">SpaceX Lanch Programs</Typography>
-      </Grid>
-      <Grid item={true} xs={12} lg={12}>
-        <Typography variant="h6">Filter</Typography>
-      </Grid>
-      <Grid item={true} xs={12} lg={12}>
-        <Typography className={styles.filterText}>
+    <Card className={styles.innerCardGrid}>
+      <Card.Body>
+        <Card.Title className="row">Filter</Card.Title>
+        <Card.Text className="row justify-content-center">
           <u>Launch year</u>
-        </Typography>
-      </Grid>
-      {yearArr.map((year, i) => (
-        <Grid
-          item={true}
-          key={year}
-          className={styles.buttonGrid}
-          xs={6}
-          lg={6}
-        >
-          <Button
-            variant="contained"
-            color="primary"
+        </Card.Text>
+
+        <ButtonGroup toggle className={`d-flex flex-wrap ${styles.btnGroup}`}>
+          {yearArr.map((year, i) => {
+            return (
+              <ToggleButton
+                className={`m-2 flex-grow-1 text-center ${styles.tglBtn}`}
+                key={year}
+                type="radio"
+                name="radio"
+                checked={radioValue === year}
+                onClick={(evt) => {
+                  evt.preventDefault();
+                  clickHandler(year, "year");
+                }}
+              >
+                {year}
+              </ToggleButton>
+            );
+          })}
+        </ButtonGroup>
+        <Card.Text className="row justify-content-center">
+          <u>Sucessful Launch</u>
+        </Card.Text>
+        <ButtonGroup toggle className={`d-flex flex-wrap ${styles.btnGroup}`}>
+          <ToggleButton
+            className={`m-2 flex-grow-1 text-center ${styles.tglBtn}`}
+            key={1}
+            type="radio"
+            name="radio"
+            checked={launchRadioValue === "true"}
             onClick={(evt) => {
               evt.preventDefault();
-              filterData(year, "year");
+              clickHandler("true", "launchSucess");
             }}
           >
-            {year}
-          </Button>
-        </Grid>
-      ))}
+            true
+          </ToggleButton>
+          <ToggleButton
+            className={`m-2 flex-grow-1 text-center ${styles.tglBtn}`}
+            key={2}
+            type="radio"
+            name="radio"
+            checked={launchRadioValue === "false"}
+            onClick={(evt) => {
+              evt.preventDefault();
+              clickHandler("false", "launchSucess");
+            }}
+          >
+            false
+          </ToggleButton>
+        </ButtonGroup>
 
-      <Grid container item>
-        <Grid item={true} xs={12} lg={12}>
-          <Typography className={styles.filterText}>
-            <u>Sucessful Launch</u>
-          </Typography>
-        </Grid>
-        <Grid item={true} xs={6} lg={6} className={styles.buttonGrid}>
-          <Button
-            variant="contained"
-            color="primary"
+        <ButtonGroup toggle className={`d-flex flex-wrap ${styles.btnGroup}`}>
+          <ToggleButton
+            className={`m-2 flex-grow-1 text-center ${styles.tglBtn}`}
+            key={1}
+            type="radio"
+            name="radio"
+            checked={landRadioValue === "true"}
             onClick={(evt) => {
-              filterData(true, "launchSucess");
+              evt.preventDefault();
+              clickHandler("true", "landSucess");
             }}
           >
             true
-          </Button>
-        </Grid>
-        <Grid item={true} xs={6} lg={6} className={styles.buttonGrid}>
-          <Button
-            variant="contained"
-            color="primary"
+          </ToggleButton>
+          <ToggleButton
+            className={`m-2 flex-grow-1 text-center ${styles.tglBtn}`}
+            key={2}
+            type="radio"
+            name="radio"
+            checked={landRadioValue === "false"}
             onClick={(evt) => {
-              filterData(false, "launchSucess");
+              evt.preventDefault();
+              clickHandler("false", "landSucess");
             }}
           >
             false
-          </Button>
-        </Grid>
-      </Grid>
-      <Grid container item>
-        <Grid item={true} xs={12} lg={12}>
-          <Typography className={styles.filterText}>
-            <u>Sucessful Landing</u>
-          </Typography>
-        </Grid>
-        <Grid item={true} xs={6} lg={6} className={styles.buttonGrid}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={(evt) => {
-              filterData(true, "landSucess");
-            }}
-          >
-            true
-          </Button>
-        </Grid>
-        <Grid item={true} xs={6} lg={6} className={styles.buttonGrid}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={(evt) => {
-              filterData(false, "landSucess");
-            }}
-          >
-            false
-          </Button>
-        </Grid>
-      </Grid>
-    </Grid>
+          </ToggleButton>
+        </ButtonGroup>
+      </Card.Body>
+    </Card>
   );
 };
-export default YearCardComponent;
+export default memo(YearCardComponent);

@@ -1,5 +1,4 @@
-import React from "react";
-import { Grid, Typography } from "@material-ui/core";
+import React, { memo } from "react";
 import styles from "./style.module.css";
 
 const MissionCardComponent = (props) => {
@@ -16,50 +15,50 @@ const MissionCardComponent = (props) => {
 
   return (
     <>
-      <Grid className={styles.innerCardGrid}>
-        <Grid className={styles.imageGrid} item={true} xs={12} lg={12}>
+      <section className={styles.innerCardGrid}>
+        <div className={styles.imageGrid}>
           <img className={styles.spaceImg} src={imgPath} />
-        </Grid>
-        <Grid item={true} xs={12} lg={12}>
-          <Typography className={styles.filterText}>
+        </div>
+        <div>
+          <span className={styles.filterText}>
             {`${mission_name}#${flight_number}`}
-          </Typography>
-        </Grid>
-        <Grid item={true} xs={12} lg={12}>
-          <Typography className={styles.filterText}>
+          </span>
+        </div>
+        <div>
+          <span className={styles.filterText}>
             <b>Mission Ids:</b>
             {` ${
               mission_id > 0
-                ? mission_id.map((val) => {
+                ? mission_id.maspan((val) => {
                     return val;
                   })
                 : "Not Available"
             }`}
-          </Typography>
-        </Grid>
-        <Grid item={true} xs={12} lg={12}>
-          <Typography className={styles.filterText}>
+          </span>
+        </div>
+        <div>
+          <span className={styles.filterText}>
             <b>Launch Year:</b>
             {` ${launch_year}`}
-          </Typography>
-        </Grid>
-        <Grid item={true} xs={12} lg={12}>
-          <Typography className={styles.filterText}>
+          </span>
+        </div>
+        <div>
+          <span className={styles.filterText}>
             <b>Successful Launch :</b> {` ${launch_success}`}
-          </Typography>
-        </Grid>
-        <Grid item={true} xs={12} lg={12}>
-          <Typography className={styles.filterText}>
+          </span>
+        </div>
+        <div>
+          <span className={styles.filterText}>
             <b>Successful Landing:</b>{" "}
             {`${
               rocket.first_stage.cores[0].land_success === null
                 ? "Not Avaliable"
                 : rocket.first_stage.cores[0].land_success
             }`}
-          </Typography>
-        </Grid>
-      </Grid>
+          </span>
+        </div>
+      </section>
     </>
   );
 };
-export default MissionCardComponent;
+export default memo(MissionCardComponent);
