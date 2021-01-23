@@ -120,7 +120,9 @@ const YearCardComponent = (props) => {
             false
           </ToggleButton>
         </ButtonGroup>
-
+        <Card.Text className="row justify-content-center">
+          <u>Sucessful Landing</u>
+        </Card.Text>
         <ButtonGroup toggle className={`d-flex flex-wrap ${styles.btnGroup}`}>
           <ToggleButton
             className={`m-2 flex-grow-1 text-center ${styles.tglBtn}`}
