@@ -1,4 +1,4 @@
-import React, { useCallback, memo, useState } from "react";
+import React, { useCallback, memo, useState, useEffect } from "react";
 import styles from "./style.module.css";
 import { ButtonGroup, Card, ToggleButton } from "react-bootstrap";
 
@@ -21,7 +21,15 @@ const yearArr = [
 ];
 
 const YearCardComponent = (props) => {
-  const { setYear, setLaunchValue, setLandingValue, setDblClick } = props;
+  const {
+    setYear,
+    setLaunchValue,
+    setLandingValue,
+    setDblClick,
+    urlYearValue,
+    urlLaunchValue,
+    urlLandingValue,
+  } = props;
   const [radioValue, setRadioValue] = useState("");
   const [landRadioValue, setlandRadioValue] = useState("");
   const [launchRadioValue, setlaunchRadioValue] = useState("");
@@ -62,6 +70,7 @@ const YearCardComponent = (props) => {
       }, 300);
     }
   });
+
   return (
     <Card className={styles.innerCardGrid}>
       <Card.Body>
@@ -78,7 +87,7 @@ const YearCardComponent = (props) => {
                 key={year}
                 type="radio"
                 name="radio"
-                checked={radioValue === year}
+                checked={radioValue == year || urlYearValue == year}
                 onClick={(evt) => {
                   evt.preventDefault();
                   clickHandler(year, "year");
@@ -98,7 +107,7 @@ const YearCardComponent = (props) => {
             key={1}
             type="radio"
             name="radio"
-            checked={launchRadioValue === "true"}
+            checked={launchRadioValue == "true" || urlLaunchValue == "true"}
             onClick={(evt) => {
               evt.preventDefault();
               clickHandler("true", "launchSucess");
@@ -111,7 +120,7 @@ const YearCardComponent = (props) => {
             key={2}
             type="radio"
             name="radio"
-            checked={launchRadioValue === "false"}
+            checked={launchRadioValue === "false" || urlLaunchValue == "fale"}
             onClick={(evt) => {
               evt.preventDefault();
               clickHandler("false", "launchSucess");
@@ -129,7 +138,7 @@ const YearCardComponent = (props) => {
             key={1}
             type="radio"
             name="radio"
-            checked={landRadioValue === "true"}
+            checked={landRadioValue === "true" || urlLandingValue == "true"}
             onClick={(evt) => {
               evt.preventDefault();
               clickHandler("true", "landSucess");
@@ -142,7 +151,7 @@ const YearCardComponent = (props) => {
             key={2}
             type="radio"
             name="radio"
-            checked={landRadioValue === "false"}
+            checked={landRadioValue === "false" || urlLandingValue == "false"}
             onClick={(evt) => {
               evt.preventDefault();
               clickHandler("false", "landSucess");

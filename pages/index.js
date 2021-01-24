@@ -52,6 +52,7 @@ const Home = () => {
         history.replace(filteredUrl);
       })
       .catch((err) => {
+        setIsLoader(false);
         console.log("NETWORK ERROR", err);
       });
   }, [selectedYear, launchValue, landingValue]);
@@ -67,6 +68,9 @@ const Home = () => {
             setLaunchValue={setLaunchValue}
             setLandingValue={setLandingValue}
             setDblClick={setDblClick}
+            urlYearValue={selectedYear}
+            urlLaunchValue={launchValue}
+            urlLandingValue={landingValue}
           />
         </aside>
         <section className="col-sm-12 col-md-7 col-lg-9 ">
@@ -88,7 +92,7 @@ const Home = () => {
               </div>
             )}
           </div>
-          {productData.length === 0 && <div>No Data Found</div>}
+          {productData.length === 0 && !isLoader && <div>No Data Found</div>}
         </section>
         <footer>Developed By: Dheeraj Joshi</footer>
       </section>
