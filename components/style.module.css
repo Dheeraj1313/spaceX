@@ -5,6 +5,7 @@
 .spaceImg{
     max-width: 100%;
     max-height: 100%;
+    background-color: #c6c6c6;
 }
 .innerCardGrid{
     margin-top: 16px;
